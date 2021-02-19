@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class AsteroidsManager : MonoBehaviour {
     public Asteroid AsteroidHuge;
@@ -9,6 +10,9 @@ public class AsteroidsManager : MonoBehaviour {
     Vector2 realCoord;
     Collider2D collider;
 
+    Dictionary<AsteroidType, Asteroid> asteroidPrefabs = new Dictionary<AsteroidType, Asteroid>();
+
+
     void Start()
     {
         Init();
@@ -17,6 +21,11 @@ public class AsteroidsManager : MonoBehaviour {
     void Init()
     {
         EventManager.EventBus.Subscribe<AsteroidDestroyEvent>(OnAsteroidDestroy);
+
+        asteroidPrefabs.Add(AsteroidType.Huge, AsteroidHuge);
+        asteroidPrefabs.Add(AsteroidType.Large, AsteroidLarge);
+        asteroidPrefabs.Add(AsteroidType.Medium, AsteroidMedium);
+        asteroidPrefabs.Add(AsteroidType.Small, AsteroidSmall);
 
         collider = GetComponent<Collider2D>();
         realCoord = new Vector2 (collider.transform.position.x - collider.bounds.size.x/2, collider.transform.position.y - collider.bounds.size.y/2);
@@ -67,18 +76,7 @@ public class AsteroidsManager : MonoBehaviour {
     Asteroid SpawnAsteroid(AsteroidType asteroidType, Vector2 vector){
         Asteroid asteroid;
         Vector3 vector3 = vector;
-        if (asteroidType == AsteroidType.Huge) {
-            asteroid = Instantiate(AsteroidHuge, vector3, Quaternion.identity);
-        }
-        else if (asteroidType == AsteroidType.Large) {
-            asteroid = Instantiate(AsteroidLarge, vector3, Quaternion.identity);
-        }
-        else if (asteroidType == AsteroidType.Medium) {
-            asteroid = Instantiate(AsteroidMedium, vector3, Quaternion.identity);
-        }
-        else{
-            asteroid = Instantiate(AsteroidSmall, vector3, Quaternion.identity);
-        }
+        asteroid = Instantiate(asteroidPrefabs[asteroidType], vector3, Quaternion.identity);
         asteroid.gameObject.SetActive(true);
         asteroid.transform.SetParent(transform);
         return asteroid;
