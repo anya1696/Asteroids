@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Отвечает за создание, уничтожение и расположение астероидов.
+*/
+
 public class AsteroidsManager : MonoBehaviour {
     public Asteroid AsteroidHuge;
     public Asteroid AsteroidLarge;
@@ -11,12 +15,9 @@ public class AsteroidsManager : MonoBehaviour {
     Collider2D spawnAreaCollider;
 
     Dictionary<AsteroidType, Asteroid> asteroidPrefabs = new Dictionary<AsteroidType, Asteroid>();
-
-    float nextactionTime = 0f;
-    float timePeriod = 1f;
+    Dictionary<AsteroidType, AsteroidData> asteroidTypeData = new Dictionary<AsteroidType, AsteroidData>();
 
     int difficulty = 2;
-    int AsteroidsCout = 0;
 
     void Start()
     {
@@ -29,11 +30,12 @@ public class AsteroidsManager : MonoBehaviour {
 
         asteroidPrefabs.Add(AsteroidType.Huge, AsteroidHuge);
         asteroidPrefabs.Add(AsteroidType.Large, AsteroidLarge);
-        //asteroidPrefabs.Add(AsteroidType.Medium, AsteroidMedium);
         asteroidPrefabs.Add(AsteroidType.Small, AsteroidSmall);
 
         spawnAreaCollider = GetComponent<Collider2D>();
         realCoord = new Vector2(spawnAreaCollider.transform.position.x - spawnAreaCollider.bounds.size.x / 2, spawnAreaCollider.transform.position.y - spawnAreaCollider.bounds.size.y / 2);
+
+        asteroidTypeData = GameArea.AsteroidTypeData;
 
         StartRound();
     }
@@ -41,13 +43,14 @@ public class AsteroidsManager : MonoBehaviour {
     public void OnAsteroidDestroy(AsteroidDestroyEvent asteroidDestroyEvent){
         Asteroid asteroid = asteroidDestroyEvent.Asteroid;
 
-        if (asteroid.Type == AsteroidType.Huge) {
-            SpawnAsteroid(AsteroidType.Large, asteroid.transform.position, true);
-            SpawnAsteroid(AsteroidType.Large, asteroid.transform.position, true);
-        } else if (asteroid.Type == AsteroidType.Large) {
-            SpawnAsteroid(AsteroidType.Small, asteroid.transform.position, true);
-            SpawnAsteroid(AsteroidType.Small, asteroid.transform.position, true);
-        } else if (asteroid.Type == AsteroidType.Small) {
+        if (GameArea.AsteroidTypeData.ContainsKey(asteroid.Type)) {
+            AsteroidData data = asteroidTypeData[asteroid.Type];
+            for (int i = 0; i < data.DestroyToCount; i++) {
+                SpawnAsteroid(data.DestroyToType, asteroid.transform.position, true);
+            }
+        }
+
+        if (asteroid.Type == AsteroidType.Small) {
             if (transform.childCount == 0) {
                 EndRound();
             }
@@ -103,10 +106,10 @@ public class AsteroidsManager : MonoBehaviour {
             return;
         }
         Vector2 pos = collider.transform.position;
-        /*Debug.Log("Asteroids coord: [" + pos.x + ", " + pos.y + "] " + "[ " + realCoord.x + ", " + realCoord.y + ", "
-        + (realCoord.x + spawnAreaCollider.bounds.size.x) + ", " + (realCoord.y + spawnAreaCollider.bounds.size.y) + "]");*/
+
         float newX = pos.x;
         float newY = pos.y;
+
         if (pos.x >= realCoord.x + spawnAreaCollider.bounds.size.x) {
             newX = realCoord.x;
         }

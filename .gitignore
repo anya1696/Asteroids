@@ -2,6 +2,7 @@
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
+/[Tt]estBuild_Data/
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
@@ -27,3 +28,9 @@ ExportedObj/
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+
+LinuxPlayer_s.debug
+UnityPlayer
+UnityPlayer_s
+UnityPlayer.so
+UnityPlayer_s.debug

@@ -1,22 +1,15 @@
 ﻿using UnityEngine;
 
+/**
+ * Отображение астеройда. Трекает столкновения, кидает необходимые для других классов ивенты.
+*/
+
 public class Asteroid : MonoBehaviour {
     public AsteroidType type;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     void OnTriggerEnter2D(Collider2D collision){
-        if (collision.gameObject.tag == "Missile") {
-            SideDestroy();
-        } else if (collision.gameObject.tag == "Player") {
+        string collisionTag = collision.gameObject.tag;
+        if (collisionTag == "Missile" || collisionTag == "Player") {
             SideDestroy();
         }
     }
@@ -24,7 +17,7 @@ public class Asteroid : MonoBehaviour {
     void SideDestroy(){
         transform.parent = null;
         EventManager.EventBus.Publish(new AsteroidDestroyEvent(this));
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 
     public AsteroidType Type {
