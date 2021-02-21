@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Missile : MonoBehaviour
-{
+public class Missile : MonoBehaviour {
     public Rigidbody2D rb;
     float speed;
 
@@ -13,17 +10,17 @@ public class Missile : MonoBehaviour
 
     void Start()
     {
-        rb.velocity = transform.right * speed ;
+        rb.velocity = transform.right * speed;
     }
 
     void OnTriggerEnter2D(Collider2D collision){
-        if (collision.gameObject.tag == "Asteroid"){
+        if (collision.gameObject.tag == "Asteroid") {
             Destroy(gameObject);
         }
     }
 
     void Update()
     {
-        
+
     }
 }

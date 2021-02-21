@@ -14,9 +14,9 @@ public class Asteroid : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collision){
-        if (collision.gameObject.tag == "Missile"){
+        if (collision.gameObject.tag == "Missile") {
             SideDestroy();
-        }else if (collision.gameObject.tag == "Player"){
+        } else if (collision.gameObject.tag == "Player") {
             SideDestroy();
         }
     }

@@ -1,5 +1,5 @@
 using Redbus.Events;
 
-public class ShipCollisionEvent: EventBase {
+public class ShipCollisionEvent : EventBase {
 
 }

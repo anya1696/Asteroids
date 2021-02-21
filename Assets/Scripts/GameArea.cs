@@ -52,7 +52,7 @@ public class GameArea : MonoBehaviour {
 
     void OnShipCollision(ShipCollisionEvent shipCollisionEvent){
         playerLifes--;
-        Destroy(lifes.transform.GetChild(lifes.transform.childCount-1).gameObject);
+        Destroy(lifes.transform.GetChild(lifes.transform.childCount - 1).gameObject);
         if (playerLifes < 0) {
             GameOver();
         }
@@ -66,7 +66,9 @@ public class GameArea : MonoBehaviour {
         Destroy(collider.gameObject);
     }
 
-    public static Dictionary<AsteroidType, AsteroidData> AsteroidTypeData{
-        get { return asteroidTypeData;}
+    public static Dictionary<AsteroidType, AsteroidData> AsteroidTypeData {
+        get {
+            return asteroidTypeData;
+        }
     }
 }

@@ -42,18 +42,16 @@ public class Player : MonoBehaviour {
 
     void PlayerControl(){
         float moveHorizontal = Input.GetAxis("Horizontal");
-        transform.Rotate(new Vector3(0,0, -moveHorizontal) * rotationSpeed);
+        transform.Rotate(new Vector3(0, 0, -moveHorizontal) * rotationSpeed);
 
         //TODO добавить энерцию
         float moveVertical = Input.GetAxis("Vertical");
-        GetComponent<Rigidbody2D>().velocity = moveVertical*shipSpeed * transform.right;
+        GetComponent<Rigidbody2D>().velocity = moveVertical * shipSpeed * transform.right;
 
         if (Input.GetKeyDown("space")) {
             Debug.Log("Space pressed");
             Shot();
         }
-
-
 
 
     }
