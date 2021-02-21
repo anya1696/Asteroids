@@ -13,7 +13,7 @@ public class Missile : MonoBehaviour
 
     void Start()
     {
-        rb.velocity = transform.right * speed;
+        rb.velocity = transform.right * speed ;
     }
 
     void OnTriggerEnter2D(Collider2D collision){

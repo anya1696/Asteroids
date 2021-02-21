@@ -12,11 +12,11 @@ public class GameArea : MonoBehaviour {
 
     private Player player;
 
-    Dictionary<AsteroidType, AsteroidData> asteroidTypeData = new Dictionary<AsteroidType, AsteroidData>{
+    static Dictionary<AsteroidType, AsteroidData> asteroidTypeData = new Dictionary<AsteroidType, AsteroidData>{
         {AsteroidType.Huge, new AsteroidData(AsteroidType.Huge, 5, 0.5f)},
-        {AsteroidType.Large,new AsteroidData(AsteroidType.Large, 10, 0.5f)},
-        {AsteroidType.Medium,new AsteroidData(AsteroidType.Medium, 20, 0.5f)},
-        {AsteroidType.Small,new AsteroidData(AsteroidType.Small, 40, 0.5f)},
+        {AsteroidType.Large,new AsteroidData(AsteroidType.Large, 10, 1f)},
+        {AsteroidType.Medium,new AsteroidData(AsteroidType.Medium, 20, 1.5f)},
+        {AsteroidType.Small,new AsteroidData(AsteroidType.Small, 40, 2f)},
     };
 
     int playerScore = 0;
@@ -51,7 +51,6 @@ public class GameArea : MonoBehaviour {
     }
 
     void OnShipCollision(ShipCollisionEvent shipCollisionEvent){
-        Debug.Log("ShipCollisionEvent:" + playerLifes);
         playerLifes--;
         Destroy(lifes.transform.GetChild(lifes.transform.childCount-1).gameObject);
         if (playerLifes < 0) {
@@ -65,5 +64,9 @@ public class GameArea : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D collider){
         Destroy(collider.gameObject);
+    }
+
+    public static Dictionary<AsteroidType, AsteroidData> AsteroidTypeData{
+        get { return asteroidTypeData;}
     }
 }

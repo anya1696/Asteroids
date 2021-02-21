@@ -22,6 +22,7 @@ public class Asteroid : MonoBehaviour {
     }
 
     void SideDestroy(){
+        transform.parent = null;
         EventManager.EventBus.Publish(new AsteroidDestroyEvent(this));
         Destroy(gameObject);
     }
