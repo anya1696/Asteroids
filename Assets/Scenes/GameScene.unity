@@ -549,7 +549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76906ba30a1eb9fdb165e05fc7b605a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progectileParent: {fileID: 74723821}
   asteroidsManager: {fileID: 1270276531}
   scoreText: {fileID: 328656657}
   lifes: {fileID: 143515573}
@@ -1015,6 +1014,11 @@ PrefabInstance:
       propertyPath: missileSpeed
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2627128446340834302, guid: 00baaec31c60ce0c8afee04789dfe05d,
+        type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 74723821}
     - target: {fileID: 2627128446340834303, guid: 00baaec31c60ce0c8afee04789dfe05d,
         type: 3}
       propertyPath: m_RootOrder
