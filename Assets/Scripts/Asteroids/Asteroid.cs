@@ -20,6 +20,10 @@ public class Asteroid : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
+    public bool CanSplitUp(){
+        return Type != AsteroidType.Small;
+    }
+
     public AsteroidType Type {
         get{
             return type;

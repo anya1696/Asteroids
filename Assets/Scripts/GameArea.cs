@@ -7,7 +7,6 @@ using UnityEngine.UI;
 */
 
 public class GameArea : MonoBehaviour {
-    public GameObject progectileParent;
     public AsteroidsManager asteroidsManager;
 
     public Text scoreText;
@@ -25,7 +24,7 @@ public class GameArea : MonoBehaviour {
     float timeToRespawn;
     bool isGameOver = false;
     int scoreToLifeRestoreCounter = 0;
-    int scoreToLifeRestoreFix = 150;
+    int scoreToLifeRestoreStep = 150;
 
     //как бы данные астероидов взятые из настроек
     static Dictionary<AsteroidType, AsteroidData> asteroidTypeData = new Dictionary<AsteroidType, AsteroidData>{
@@ -57,8 +56,6 @@ public class GameArea : MonoBehaviour {
         EventManager.EventBus.Subscribe<ShipCollisionAsteroidEvent>(OnShipCollisionAsteroid);
         scoreText.text = "0";
 
-        myPlayer.GetComponent<Player>().ProjectileParent = progectileParent;
-
         InitLifeCounter();
     }
 
@@ -72,10 +69,10 @@ public class GameArea : MonoBehaviour {
         int asteroidScore = asteroidTypeData[asteroidDestroyEvent.Asteroid.Type].Score;
         playerScore += asteroidScore;
         scoreToLifeRestoreCounter += asteroidScore;
-        if (scoreToLifeRestoreCounter >= scoreToLifeRestoreFix) {
+        if (scoreToLifeRestoreCounter >= scoreToLifeRestoreStep) {
             CreateLifeSprite();
             playerLifes++;
-            scoreToLifeRestoreCounter = scoreToLifeRestoreCounter - scoreToLifeRestoreFix;
+            scoreToLifeRestoreCounter = scoreToLifeRestoreCounter - scoreToLifeRestoreStep;
         }
         scoreText.text = playerScore.ToString();
     }

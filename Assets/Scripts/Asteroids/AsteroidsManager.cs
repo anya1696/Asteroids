@@ -17,7 +17,7 @@ public class AsteroidsManager : MonoBehaviour {
     Dictionary<AsteroidType, Asteroid> asteroidPrefabs = new Dictionary<AsteroidType, Asteroid>();
     Dictionary<AsteroidType, AsteroidData> asteroidTypeData = new Dictionary<AsteroidType, AsteroidData>();
 
-    int difficulty = 2;
+    int difficulty = 3;
 
     void Start()
     {
@@ -50,7 +50,7 @@ public class AsteroidsManager : MonoBehaviour {
             }
         }
 
-        if (asteroid.Type == AsteroidType.Small) {
+        if (!asteroid.CanSplitUp() && transform.childCount == 0) {
             if (transform.childCount == 0) {
                 EndRound();
             }
@@ -79,7 +79,7 @@ public class AsteroidsManager : MonoBehaviour {
     }
 
     void StartRound(){
-        for (int i = 0; i <= difficulty; i++) {
+        for (int i = 0; i < difficulty; i++) {
             SpawnAsteroid(AsteroidType.Huge, GetRandomSpawnPoint(), false);
         }
     }
@@ -93,10 +93,11 @@ public class AsteroidsManager : MonoBehaviour {
         asteroid.transform.SetParent(transform);
 
         if (randomVelocity) {
-            velocity = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)) * GameArea.AsteroidTypeData[asteroidType].Speed;
+            velocity = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * GameArea.AsteroidTypeData[asteroidType].Speed;
         } else {
             velocity = Vector2.one * GameArea.AsteroidTypeData[asteroidType].Speed;
         }
+
         asteroid.GetComponent<Rigidbody2D>().velocity = velocity;
         return asteroid;
     }

@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
     public float moveForce = 2f;
 
 
-    public GameObject ProjectileParent { get; set; }
+    public GameObject projectileParent;
 
     void Update()
     {
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour {
     void Shot(){
         GameObject projectile = Instantiate(missile, gun.transform.position, Quaternion.identity);
         projectile.gameObject.SetActive(true);
-        projectile.transform.SetParent(ProjectileParent.transform);
+        projectile.transform.SetParent(projectileParent.transform);
         projectile.transform.rotation = transform.rotation;
         projectile.GetComponent<Rigidbody2D>().velocity = transform.right * missileSpeed;
     }
